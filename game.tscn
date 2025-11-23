@@ -1,3 +1,95 @@
-[gd_scene format=3 uid="uid://bbhevsnxiybm4"]
+[gd_scene load_steps=12 format=3 uid="uid://bbhevsnxiybm4"]
+
+[ext_resource type="PackedScene" uid="uid://bu13rtc7x6hvr" path="res://player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://cfppf637judib" path="res://assets/Ship_Large.gltf" id="2_ship"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1"]
+sky_top_color = Color(0.4, 0.6, 0.9, 1)
+sky_horizon_color = Color(0.7, 0.8, 0.95, 1)
+ground_bottom_color = Color(0.1, 0.15, 0.3, 1)
+ground_horizon_color = Color(0.7, 0.8, 0.95, 1)
+
+[sub_resource type="Sky" id="Sky_1"]
+sky_material = SubResource("ProceduralSkyMaterial_1")
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 2
+sky = SubResource("Sky_1")
+ambient_light_source = 2
+ambient_light_color = Color(0.8, 0.85, 0.9, 1)
+ambient_light_energy = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7jktm"]
+size = Vector3(8.713318, 1.0244141, 3.8889217)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e2o6t"]
+size = Vector3(4.3432617, 1.0244141, 3.8889217)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_feb5d"]
+size = Vector3(2.125183, 1.0244141, 1.4317031)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fc0e3"]
+size = Vector3(1.5169907, 1.0073242, 2.856331)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ocean"]
+transparency = 1
+albedo_color = Color(0.1, 0.4, 0.6, 0.8)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ocean"]
+material = SubResource("StandardMaterial3D_ocean")
+size = Vector2(200, 200)
 
 [node name="Game" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Ship" type="StaticBody3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="ShipModel" parent="Ship" instance=ExtResource("2_ship")]
+
+[node name="DeckCollision" type="CollisionShape3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26187134, 0.5716145, 0.15842605)
+shape = SubResource("BoxShape3D_7jktm")
+debug_color = Color(0.9411765, 0, 0.84313726, 1)
+
+[node name="DeckCollision2" type="CollisionShape3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3906755, 1.0923252, 0.15842605)
+shape = SubResource("BoxShape3D_e2o6t")
+debug_color = Color(0.9411765, 0, 0.84313726, 1)
+
+[node name="DeckCollision3" type="CollisionShape3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.4117956, 1.4923435, -0.2672302)
+shape = SubResource("BoxShape3D_e2o6t")
+debug_color = Color(0.9411765, 0, 0.84313726, 1)
+
+[node name="StairsCollision" type="CollisionShape3D" parent="Ship"]
+transform = Transform3D(0.86878705, -0.49518606, 0.00026721324, 0.4951845, 0.8687855, 0.0020420786, -0.0012433598, -0.0016418116, 0.999998, 2.556562, 1.0693235, -1.0981518)
+shape = SubResource("BoxShape3D_feb5d")
+debug_color = Color(0.9411765, 0, 0.84313726, 1)
+
+[node name="Wall" type="CollisionShape3D" parent="Ship"]
+transform = Transform3D(-0.07031253, -0.9975234, -0.0017251726, 0.99752426, -0.07031456, 0.0011248408, -0.0012433596, -0.0016418115, 0.9999979, 3.7051725, 0.95071864, -0.14194691)
+shape = SubResource("BoxShape3D_feb5d")
+debug_color = Color(0.9411765, 0, 0.84313726, 1)
+
+[node name="StairsCollision2" type="CollisionShape3D" parent="Ship"]
+transform = Transform3D(0.86878705, -0.49518606, 0.00026721324, 0.4951845, 0.8687855, 0.0020420786, -0.0012433598, -0.0016418116, 0.999998, 2.556562, 1.0693235, 1.2603561)
+shape = SubResource("BoxShape3D_feb5d")
+debug_color = Color(0.9411765, 0, 0.84313726, 1)
+
+[node name="StairsCollisionWide" type="CollisionShape3D" parent="Ship"]
+transform = Transform3D(0.7307808, 0.682609, 0.0020293428, -0.6826111, 0.73078185, 0.0003510758, -0.0012433596, -0.0016418115, 0.9999979, -1.9853388, 0.7433273, -0.01986006)
+shape = SubResource("BoxShape3D_fc0e3")
+debug_color = Color(0.9411765, 0, 0.84313726, 1)
+
+[node name="Ocean" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_ocean")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6316945, 2.2624059, 0)

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bu13rtc7x6hvr"]
+
+[ext_resource type="PackedScene" uid="uid://bpla4yyxe6bl5" path="res://assets/Characters_Mako.gltf" id="1_mako"]
+[ext_resource type="Script" uid="uid://cwv1e87d3dhfd" path="res://player/player.gd" id="2_script"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
+radius = 0.35
+height = 1.4
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("2_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("CapsuleShape3D_1")
+
+[node name="MakoModel" parent="." instance=ExtResource("1_mako")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="CameraPivot" type="Node3D" parent="MakoModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="MakoModel/CameraPivot"]
+transform = Transform3D(-1, 4.184857e-08, -7.675571e-08, 0, 0.877983, 0.47869185, 8.742278e-08, 0.47869185, -0.877983, -0.03540635, 0.15068245, -2.000515)
